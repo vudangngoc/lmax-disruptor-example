@@ -1,5 +1,7 @@
 package org.example.lmax;
 
+import org.example.lmax.disruptor.DisruptorHandle;
+
 import com.lmax.disruptor.EventHandler;
 
 public class TestDisruptor {
