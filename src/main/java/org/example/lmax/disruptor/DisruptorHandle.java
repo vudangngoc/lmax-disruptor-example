@@ -3,6 +3,7 @@ package org.example.lmax.disruptor;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,9 +21,12 @@ public class DisruptorHandle {
 
 	}
 	@SuppressWarnings("unchecked")
-	public void injectService(EventHandler<Context> service){		
-		final EventHandler<Context> hanler = service;
-		disruptor.handleEventsWith(hanler);
+	public void injectServices(List<EventHandler<Context>> services){		
+		if(services.size() == 0) return;
+		disruptor.handleEventsWith(services.get(0));
+		if(services.size() > 1) 
+			for(int i = 1; i < services.size(); i++)
+				disruptor.after(services.get(i - 1)).handleEventsWith(services.get(i));
 		this.ringBuffer = disruptor.start();
 	}
 	public void stopDisruptor(){

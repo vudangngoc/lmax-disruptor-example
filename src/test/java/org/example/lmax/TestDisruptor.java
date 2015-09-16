@@ -1,22 +1,40 @@
 package org.example.lmax;
 
+import java.util.ArrayList;
+
 import org.example.lmax.disruptor.DisruptorHandle;
+import org.junit.Test;
 
 import com.lmax.disruptor.EventHandler;
 
 public class TestDisruptor {
-	public void testPublicToDisruptor(){
-		EventHandler<Context> handler = new EventHandler<Context>() {
+	@Test
+	public void test1PublishTo3Consummer(){
+		ArrayList<EventHandler<Context>> arr = new ArrayList<EventHandler<Context>>();
+		arr.add(new EventHandler<Context>() {
 			
 			public void onEvent(Context arg0, long arg1, boolean arg2) throws Exception {
-				System.out.println(arg0.getData());
+				System.out.println("Handle with #1: " + arg0.getData());
 				
 			}
-		};
+		});
+		arr.add(new EventHandler<Context>() {
+			
+			public void onEvent(Context arg0, long arg1, boolean arg2) throws Exception {
+				System.out.println("Handle with #2: "+ arg0.getData());
+				
+			}
+		});
+		arr.add(new EventHandler<Context>() {
+			
+			public void onEvent(Context arg0, long arg1, boolean arg2) throws Exception {
+				System.out.println("Handle with #3: "+ arg0.getData());
+				
+			}
+		});
 		DisruptorHandle disruptor = new DisruptorHandle(512);
-		disruptor.injectService(handler);
-		disruptor.push(1);
-		disruptor.push(2);
-		disruptor.push(3);
+		disruptor.injectServices(arr);
+		for(long i = 0; i<100000;i++)
+		disruptor.push(i);
 	}
 }
