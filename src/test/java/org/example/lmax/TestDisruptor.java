@@ -34,7 +34,7 @@ public class TestDisruptor {
 		});
 		DisruptorHandle disruptor = new DisruptorHandle(512);
 		disruptor.injectServices(arr);
-		for(long i = 0; i<100000;i++)
+		for(long i = 0; i<1000;i++)
 		disruptor.push(i);
 	}
 }
