@@ -13,8 +13,8 @@ import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 
-public class DisruptorHandle {
-	public DisruptorHandle(int ringSize){
+public class DisruptorHandler {
+	public DisruptorHandler(int ringSize){
 		this.exec = Executors.newCachedThreadPool();
 		// Preallocate RingBuffer with 1024 ValueEvents
 		this.disruptor = new Disruptor<Context>(Context.EVENT_FACTORY, ringSize, exec);

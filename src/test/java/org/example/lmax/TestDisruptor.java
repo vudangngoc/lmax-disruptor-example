@@ -2,7 +2,7 @@ package org.example.lmax;
 
 import java.util.ArrayList;
 
-import org.example.lmax.disruptor.DisruptorHandle;
+import org.example.lmax.disruptor.DisruptorHandler;
 import org.junit.Test;
 
 import com.lmax.disruptor.EventHandler;
@@ -32,7 +32,7 @@ public class TestDisruptor {
 				
 			}
 		});
-		DisruptorHandle disruptor = new DisruptorHandle(512);
+		DisruptorHandler disruptor = new DisruptorHandler(512);
 		disruptor.injectServices(arr);
 		for(long i = 0; i<1000;i++)
 		disruptor.push(i);
