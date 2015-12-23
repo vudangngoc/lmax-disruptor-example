@@ -13,7 +13,7 @@ import com.lmax.disruptor.WorkerPool;
 public class OnePublisherWorkerPool {
 	public OnePublisherWorkerPool(WorkHandler<Context> ... w){
 		workerPool = new WorkerPool<Context>(Context.EVENT_FACTORY, Context.EXCEPTION_HANDLE,w );
-		EXECUTOR = Executors.newFixedThreadPool(w.length);
+		
 		ringBuffer = workerPool.start(Executors.newCachedThreadPool());
 		ringBuffer.newBarrier();
 		
@@ -24,7 +24,7 @@ public class OnePublisherWorkerPool {
 		event.setData(data);
 		ringBuffer.publish(sequence);
 	}
-	ExecutorService EXECUTOR;
+	
 	RingBuffer<Context> ringBuffer;
 	WorkerPool<Context> workerPool;
 }
