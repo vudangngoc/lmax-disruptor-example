@@ -14,7 +14,7 @@ public class OnePublisherWorkerPool {
 	public OnePublisherWorkerPool(WorkHandler<Context> ... w){
 		workerPool = new WorkerPool<Context>(Context.EVENT_FACTORY, Context.EXCEPTION_HANDLE,w );
 		
-		ringBuffer = workerPool.start(Executors.newCachedThreadPool());
+		ringBuffer = workerPool.start(Executors.newFixedThreadPool(w.length));
 		ringBuffer.newBarrier();
 		
 	}
